@@ -1,23 +1,33 @@
-import logo from './logo.svg';
+import React from 'react'
 import './App.css';
 
+const valArr = [1,2,3,4,5,6,7,8,9,'+',0,'-','*','/','=']
 function App() {
+  const [text,setText] = React.useState('')
+  const [result,setResult] = React.useState(null)
+
+  const onHandleButtonClick = (val) => {
+    if(val==='='){
+      const res = eval(text)
+      setResult(res)
+    }
+    else setText(prev=>prev+val)
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className='cal-container'>
+        {valArr.map(val=>{
+          return (
+            <button className='cal-values' onClick={()=>onHandleButtonClick(val)}>{val}</button>
+          )
+        })}
+        <div className='display-text'>
+          <h1>{text}</h1>
+          {
+            result && <h1>Result : {result}</h1>
+          }
+        </div>
+      </div>
     </div>
   );
 }
